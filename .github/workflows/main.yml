@@ -61,11 +61,11 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
-      - name: Build and deploy images on Linode
+      - name: Build and deploy images on Server
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ secrets.SERVER_IP_ADDRESS }}:/code
+          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml ali@${{ secrets.SERVER_IP_ADDRESS }}:/code
           ssh -o StrictHostKeyChecking=no ali@${{ secrets.SERVER_IP_ADDRESS }} << 'ENDSSH'
             cd /app
             source .env
