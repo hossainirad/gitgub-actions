@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  action-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REQUIREMENTS_FILE: "requirements.txt"
+    command: python manage.py runserver 8000
+    volumes:
+      - ./:/code/
+    ports:
+      - "8001:8000"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=foo
+    env_file:
+      - .env

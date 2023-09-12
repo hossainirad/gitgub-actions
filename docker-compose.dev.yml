@@ -1,0 +1,78 @@
+
+services:
+
+  github-action-web:
+    image: dockerized-django
+    build:
+      context: .
+      dockerfile: DevDockerfile
+      args:
+        REQUIREMENTS_FILE: "requirements.txt"
+    command: bash -c "celery -A config worker -l info && gunicorn --bind :8000 config.wsgi:application --reload"
+    restart: always
+    ports:
+      - "8001:8001"
+    depends_on:
+      - dockerized_db
+    env_file:
+      - development.env
+    volumes:
+      - dockerized_media:/code/media
+      - dockerized_static:/code/static
+    networks:
+      - dockerized-net
+
+
+
+  dockerized_db:
+    image: postgres
+    restart: always
+    env_file:
+      - development.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - dockerized_postgres_data_storage:/var/lib/postgresql/data/pgdata
+    networks:
+      - dockerized-net
+
+  dockerized_redis:
+    image: redis:6.2
+    restart: always
+    env_file:
+      - development.env
+    ports:
+      - "6379:6379"
+    volumes:
+      - dockerized_redis_data:/data
+    networks:
+      - dockerized-net
+
+  dockerized_celery:
+    container_name: celery_worker
+    entrypoint: celery -A config worker -l info
+    depends_on:
+      - dockerized-django
+      - dockerized_db
+      - dockerized_redis
+    build:
+      context: .
+      dockerfile: DevDockerfile
+    environment:
+      - C_FORCE_ROOT="true"
+      - CELERY_BROKER_URL="redis://dockerized_redis:6379/0"
+    env_file:
+      - development.env
+    restart: always
+    networks:
+      - dockerized-net
+
+
+volumes:
+  dockerized_media:
+  dockerized_static:
+  dockerized_postgres_data_storage:
+  dockerized_redis_data:
+
+networks:
+  dockerized-net:
