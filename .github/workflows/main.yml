@@ -1,6 +1,21 @@
 name: Continuous Integration and Delivery
 
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        required: true
+        description: '💥 Environment to deploy to'
+        default: 'production'
+        options:
+          - 'production'
+      feature_branch:
+        type: string
+        required: true
+        description: '🎁 Feature branch to deploy'
+        default: 'master'
+
 
 env:
   WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
