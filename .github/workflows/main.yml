@@ -101,4 +101,4 @@ jobs:
       - name: Print Environment Variables
         run: |
           echo " 🎁🎁🎁🎁🎁 input that selected is ==> ${{ inputs.environment }}"
-          echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ TEST_VARIABLE }}"
+          echo " 🎁🎁🎁🎁🎁 repository variable is ==> $TEST_VARIABLE"
