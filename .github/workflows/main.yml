@@ -27,6 +27,7 @@ jobs:
   build:
     name: Build Docker Images
     runs-on: ubuntu-latest
+    if: github.event.inputs.environment == 'development'
     steps:
       - name: Checkout master branch
         uses: actions/checkout@v1
@@ -101,5 +102,4 @@ jobs:
       - name: Print Environment Variables
         run: |
           echo " 🎁🎁🎁🎁🎁 input that selected is ==> ${{ inputs.environment }}"
-          acces to repository TEST_VARIABLE variable that set in github repository variable
           echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ env.TEST_VARIABLE }}"
