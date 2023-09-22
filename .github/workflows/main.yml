@@ -93,3 +93,12 @@ jobs:
         run: |
           echo " 🎁🎁🎁🎁🎁 input that selected is ==> ${{ inputs.environment }}"
           echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ env.TEST_VARIABLE }}"
+  deploy-pro:
+    name: Print TEST_VARIABLE Variable
+    runs-on: ubuntu-latest
+    if: github.event.inputs.environment == 'production'
+    steps:
+      - name: Print Environment Variables
+        run: |
+          echo " 🎁🎁🎁🎁🎁 input that selected is ==> ${{ inputs.environment }}"
+          echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ env.TEST_VARIABLE }}"
