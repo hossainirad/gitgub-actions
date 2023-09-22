@@ -90,4 +90,6 @@ jobs:
     if: github.event.inputs.environment == 'development'
     steps:
       - name: Print Environment Variables
-        run: echo " 🎁🎁🎁🎁🎁 input that selected is ==> ${{ inputs.environment }}"
+        run: |
+          echo " 🎁🎁🎁🎁🎁 input that selected is ==> ${{ inputs.environment }}"
+          echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ env.TEST_VARIABLE }}"
