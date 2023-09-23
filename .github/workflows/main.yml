@@ -102,3 +102,11 @@ jobs:
       - name: Print Environment Variables
         run: |
           echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ vars.TEST_VARIABLE }}"
+  debug-web-image:
+    name: Print WEB_IMAGE Variable
+    runs-on: ubuntu-latest
+    if: github.event.inputs.environment == 'development'
+    steps:
+      - name: Print Environment Variables
+        run: |
+          echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ env.WEB_IMAGE }}"
