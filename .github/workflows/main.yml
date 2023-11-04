@@ -110,3 +110,11 @@ jobs:
       - name: Print Environment Variables
         run: |
           echo " 🎁🎁🎁🎁🎁 repository variable is ==> ${{ env.WEB_IMAGE }}"
+  print-github-action-used-resources:
+    name: Print GitHub Action Used Resources
+    runs-on: ubuntu-latest
+    if: github.event.inputs.environment == 'development'
+    steps:
+      - name: Print GitHub Action Used Resources
+        run: |
+          df -h
